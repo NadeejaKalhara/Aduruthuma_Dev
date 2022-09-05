@@ -10,14 +10,14 @@ data-template="vertical-menu-template-free">
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard | Aduruthuma LMS</title>
+    <title>Slips | Aduruthuma LMS</title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/icon.png" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.8/firebase-app.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.8/firebase-auth.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.8/firebase-database.min.js"></script>
@@ -32,6 +32,10 @@ data-template="vertical-menu-template-free">
     />
   
 <script src="../js/sweetalert2@11.js"></script>
+<script src="js/fast-image-zoom.js"></script>
+<script>
+  imageZoom()
+</script>
 
 
     <!-- Icons. Uncomment required icon fonts -->
@@ -121,7 +125,7 @@ data-template="vertical-menu-template-free">
 					<div class="menu-inner-shadow"></div>
 					<ul class="menu-inner py-1">
 						<!-- Dashboard -->
-						<li class="menu-item active">
+						<li class="menu-item ">
 							<a href="/" class="menu-link">
 								<i class="menu-icon tf-icons bx bx-home-circle"></i>
 								<div data-i18n="Analytics">Dashboard</div>
@@ -129,7 +133,7 @@ data-template="vertical-menu-template-free">
 						</li>
 						<!-- Layouts -->
 				
-                        <li class="menu-item">
+                        <li class="menu-item active">
 							<a href="slips" class="menu-link">
 								<i class="menu-icon tf-icons bx bx-food-menu"></i>
 								<div data-i18n="Analytics">Slips</div>
@@ -137,7 +141,7 @@ data-template="vertical-menu-template-free">
 						</li>
             <!-- Exams -->
 						<li class="menu-item">
-							<a href="exams" class="menu-link">
+							<a href="exams.html" class="menu-link">
 								<i class="menu-icon tf-icons bx bx-timer"></i>
 								<div data-i18n="Analytics">Exams</div>
 							</a>
@@ -185,7 +189,7 @@ data-template="vertical-menu-template-free">
 							</a>
 						</li>
             <li class="menu-item ">
-							<a href="change-password" class="menu-link">
+							<a href="change-password.html" class="menu-link">
 								<i class="menu-icon tf-icons bx bxs-lock-alt"></i>
 								<div data-i18n="Analytics">Change Password</div>
 							</a>
@@ -333,10 +337,61 @@ Swal.fire({
           </nav>
 
           <!-- / Navbar -->
-
+      
           <!-- Content wrapper -->
           <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y" id="cont" >
+              <div class="row row-cols-1 row-cols-md-4 g-4" id="all-classes-card" >
+                <div class="col clzcard"  id="clzcard"  style="display: none;" >
+                  <div class="card" style="border: 1px solid #696cfe80;">
+                   
+                    <a >
+                      <img  src="assets/img/clz.jpg" class="card-img-top allpic" alt="Class Icon"/>
+              
+                      <div id="pdf-main-container" class="pdfcont" style="display:block ;">
+                        <div class="pdf-loader" id="pdf-loader"></div>
+                        <div class="pdf-contents" id="pdf-contents">
+                            <div id="pdf-meta">
+                               
+                                <div class="page-count-containe" id="page-count-container"></div>
+                            </div>
+                        <img src="" ><canvas class="pdf-canvas" id="pdf-canvas" style="width:100% ;"></canvas></img>    
+                        </div>
+                    </div>
+                    </a>
+                    <div class="card-body">
+                      <a href="#">
+                        <h5  class="card-title fw-bold sname" style="font-size: 20px; color: #111;">Loading slip Name</h5>
+                      </a>
+      
+                      <center style="display: none;" class="mb-1 islive">
+                        <span id="live-streaming" class="badge bg-label-primary rounded-pill align-middle"><i class="bx bx-broadcast bx-flashing"></i> <span class="align-middle bx-flashing">Live on Aduruthuma</span></span>
+                      </center>
+                      <p>
+                        <span class="fw-bold"><i class='bx bx-calendar'></i></span> <span class="align-middle cname">Loading</span>
+                        <br>
+                        <span class="fw-bold"><i class='bx bx-time-five'></i></span> <span class="align-middle syr">Loading</span>
+                        <br>
+                        <span class="fw-bold"><i class='bx bx-user-circle'></i></span> <span class="align-middle tname">Loading</span>
+                        <br>
+                        <span class="fw-bold"><i class='bx bx-info-circle'></i></span> <span class="align-middle fee">Loading</span>
+                        <br>
+                      </p>
+                      <center>
+                        <a href="javascript:void(0)" class="btn btn-outline-primary fw-bold allbtn" onclick="launch(this.id)" id="allbtn"><i class='bx bxs-check-circle'></i></a>
+                        <a href="javascript:void(0)" class="btn btn-outline-primary fw-bold vbtn" id="vbtn"><i class='bx bx-window-open'></i></a>
+                        <a href="javascript:void(0)" class="btn btn-outline-primary fw-bold chathu" onclick="launch(this.id)" id="chathu"><i class='bx bx-x-circle' ></i></a>
 
+
+                      </center>
+                    </div>
+                  </div>
+                </div>
+     
+ 
+                
+              </div>
+          </div>
           </div>
 
           <!-- Content wrapper -->
@@ -356,6 +411,7 @@ Swal.fire({
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="js/slips.js"></script>
 
     <script src="../assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
@@ -393,5 +449,60 @@ Swal.fire({
         location.replace("login")} 
     </script>
 
+<script>
+  firebase.auth().onAuthStateChanged((user) => {
+if (user) {
+// User is signed in, see docs for a list of available properties
+// https://firebase.google.com/docs/reference/js/firebase.User
+var xhr2 = new XMLHttpRequest();
+url = "http://localhost:5000/slips";
+xhr2.open("POST", url, true);
+xhr2.setRequestHeader("Content-Type", "application/json");
+xhr2.onreadystatechange = function () {
+if (xhr2.readyState === 4 && xhr2.status === 200) {
+onloadz(JSON.parse(xhr2.responseText))
+}}
+var  data = JSON.stringify({email:user.email,pass:atob(getCookie("openjs"))})
+encrypted = CryptoJS.AES.encrypt(data, 'fuck').toString()
+var pushload = JSON.stringify({auth:encrypted})
+xhr2.send(pushload)
+
+
+
+uid = user.uid;
+logs = user
+document.getElementById("dp1").src = user.photoURL
+document.getElementById("dp2").src = user.photoURL
+document.getElementById("name2").innerText = user.displayName
+
+
+// ...
+} else {
+location.replace("login")
+// User is signed out
+// ...
+}
+});
+</script>
+<script>
+    firebase.auth().onAuthStateChanged((user) => {
+if (user) {
+// User is signed in, see docs for a list of available properties
+// https://firebase.google.com/docs/reference/js/firebase.User
+uid = user.uid;
+logs = user
+document.getElementById("dp1").src = user.photoURL
+document.getElementById("dp2").src = user.photoURL
+document.getElementById("name2").innerText = user.displayName
+
+
+// ...
+} else {
+location.replace("login")
+// User is signed out
+// ...
+}
+});
+</script>
 </body>
 </html>

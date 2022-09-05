@@ -61,6 +61,7 @@
     <link rel="stylesheet" href="assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="assets/css/demo.css" />
 <script src="js/sweetalert2@11.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
@@ -105,23 +106,119 @@ function opengo(){
     // The signed-in user info.
     var user = result.user;
     // ...
+    const { value: password } =  Swal.fire({
+  title: 'Enter your password',
+  input: 'password',
+  inputLabel: 'Enter the Account Password',
+  inputPlaceholder: 'Enter your password',
+  inputAttributes: {
+    maxlength: 10,
+    autocapitalize: 'off',
+    autocorrect: 'off'
+  }
+}).then((password)=>
+{
+  if (password.value) {
 
-    const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
+
+  function log (dt) {
+    console.log(dt)
+    console.log(password.value)
+    if(dt==password.value){
+      console.log("Authenticated!")
+    } else {
+      Swal.fire(
+  'Failed',
+  'Bad input password',
+  'warning'
+)
+    }
+  }
+
+  let timerInterval
+Swal.fire({
+  title:"Verifying it's real you!",
+  html: 'Authenticating in <b></b> milliseconds.',
+  timer: 6000,
   timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  didOpen: () => {
+    Swal.showLoading()
+    const b = Swal.getHtmlContainer().querySelector('b')
+    timerInterval = setInterval(() => {
+      b.textContent = Swal.getTimerLeft()
+    }, 100)
+  },
+  willClose: () => {
+    clearInterval(timerInterval)
+  }
+}).then((result) => {
+  /* Read more about handling dismissals below */
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log('I was closed by the timer')
   }
 })
 
-Toast.fire({
-  icon: 'success',
-  title: 'Signed in successfully'
+var xhr = new XMLHttpRequest();
+url = "http://localhost:5000/auth";
+xhr.open("POST", url, true);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4 && xhr.status === 404) {
+    Swal.fire({
+  icon: 'warning',
+  title: 'Invalid User',
+  showConfirmButton: false,
+  timer: 1500
 })
+  }
+  if (xhr.readyState === 4 && xhr.status === 301) {
+    Swal.fire({
+  icon: 'warning',
+  title: 'Incorrect Password',
+  showConfirmButton: false,
+  timer: 1500
+})
+  }
+    if (xhr.readyState === 4 && xhr.status === 200) {
+console.log(xhr.responseText)
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Signed in',
+  showConfirmButton: false,
+  timer: 1500
+}).then((res)=>{
+  location.replace('/')
+})
+setCookie("openjs",btoa(xhr.responseText),3)
+    }}
+  var  data = JSON.stringify({email:user.email,pass:password.value})
+  encrypted = CryptoJS.AES.encrypt(data, 'fuck').toString()
+  var pushload = JSON.stringify({auth:encrypted})
+xhr.send(pushload)
+
+  
+
+}
+}
+)
+
+
+
+
+
+
+
+
+
+
+
   }).catch((error) => {
     // Handle Errors here.
     var errorCode = error.code;
@@ -150,10 +247,10 @@ Toast.fire({
               </div>
               <!-- /Logo -->
               <div id="popp">
-              <h4 class="mb-2">Admin Login | <span class="font_class_1_un_bindumathi">ආයතන ඇතුල් වීම</span></h4>
+              <h4 class="mb-2"><b class="text-primary">Admin Login</b> | <span class="font_class_1_un_bindumathi">ආයතන ඇතුල් වීම</span></h4>
               <h5 class="mb-4 font_class_1_un_bindumathi">ඔබගේ ගිණුමට ඇතුල් වන්න</h5>
-
-           <button class="btn btn-dark"  onclick="opengo()"> <span style="font-size:15px ;"><i class='bx bxl-google ' ></i></span> Sign with Google</button>
+           <center>   <button class="btn btn-dark"  onclick="opengo()"> <span style="font-size:15px ;"><i class='bx bxl-google ' ></i></span> Sign with Google</button></center>
+         
            <br>
            <br>
           
