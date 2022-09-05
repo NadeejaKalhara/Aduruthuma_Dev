@@ -2,9 +2,97 @@ count = 0
 cans = 1
 var $$ = function( id ) { return document.getElementById( id ); };
 function launch(that){
-
+    let timerInterval
+Swal.fire({
+  title: 'Approving the slip!',
+  html: 'Updating in <b></b> milliseconds.',
+  timer: 5000,
+  timerProgressBar: true,
+  didOpen: () => {
+    Swal.showLoading()
+    const b = Swal.getHtmlContainer().querySelector('b')
+    timerInterval = setInterval(() => {
+      b.textContent = Swal.getTimerLeft()
+    }, 100)
+  },
+  willClose: () => {
+    clearInterval(timerInterval)
+  }
+}).then((result) => {
+  /* Read more about handling dismissals below */
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log('I was closed by the timer')
+  }
+})
+console.log(that)
+var xhr2 = new XMLHttpRequest();
+url = "https://aduruthuma-dev-8sr3.onrender.com/approve";
+xhr2.open("POST", url, true);
+xhr2.setRequestHeader("Content-Type", "application/json");
+xhr2.onreadystatechange = function () {
+if (xhr2.readyState === 4 && xhr2.status === 200) {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Slips has been approved',
+        showConfirmButton: false,
+        timer: 1500
+      }).then((x)=>{
+        location.reload()
+      })
+ 
+}}
+var  data = JSON.stringify({email:logs.email,pass:atob(getCookie("openjs")),load:that})
+encrypted = CryptoJS.AES.encrypt(data, 'fuck').toString()
+var pushload = JSON.stringify({auth:encrypted})
+xhr2.send(pushload)
 }
-
+function reject(that){
+    let timerInterval
+Swal.fire({
+  title: 'Approving the slip!',
+  html: 'Updating in <b></b> milliseconds.',
+  timer: 5000,
+  timerProgressBar: true,
+  didOpen: () => {
+    Swal.showLoading()
+    const b = Swal.getHtmlContainer().querySelector('b')
+    timerInterval = setInterval(() => {
+      b.textContent = Swal.getTimerLeft()
+    }, 100)
+  },
+  willClose: () => {
+    clearInterval(timerInterval)
+  }
+}).then((result) => {
+  /* Read more about handling dismissals below */
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log('I was closed by the timer')
+  }
+})
+console.log(that)
+var xhr2 = new XMLHttpRequest();
+url = "https://aduruthuma-dev-8sr3.onrender.com/reject";
+xhr2.open("POST", url, true);
+xhr2.setRequestHeader("Content-Type", "application/json");
+xhr2.onreadystatechange = function () {
+if (xhr2.readyState === 4 && xhr2.status === 200) {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Slips Rejected',
+        showConfirmButton: false,
+        timer: 1500
+      }).then((x)=>{
+        location.reload()
+      })
+ 
+}}
+var  data = JSON.stringify({email:logs.email,pass:atob(getCookie("openjs")),load:that})
+encrypted = CryptoJS.AES.encrypt(data, 'fuck').toString()
+var pushload = JSON.stringify({auth:encrypted})
+xhr2.send(pushload)
+}
             var _PDF_DOC,
             _CURRENT_PAGE,
             _TOTAL_PAGES,
@@ -97,34 +185,39 @@ function onloadz(yt){
         classes = yt[Object.keys(yt)[a]]
 
 dt = months[Object.keys(months)[w]]
+if(dt["url"]=="reject"){
+    console.log("reject found")
+} else{
+if(dt["url"]!=null&&dt["url"]!="reject"){
         console.log(classes[Object.keys(classes)[z]])
         clzcd = $$("clzcard")
         clone = clzcd.cloneNode(true);  
         pdfs = $$("pdf-main-container")
         cones = pdfs.cloneNode(true);
-   
     $$("all-classes-card").appendChild(clone);
     count = count + 1
     k = count
+   $$('avai').innerText = count+' slips pending'
+
     console.log(k)
     console.log(dt)
     document.getElementsByClassName("pdf-canvas")[k].id="pdf-canvas"+count
     document.getElementsByClassName("clzcard")[k].style.display="block"
-    if(dt["url"]!=null){
+   
         if(dt["url"].includes(".pdf")){
         document.getElementsByClassName("sname")[k].innerText = dt["name"] + (" (pdf)")
 
     } else {
         document.getElementsByClassName("sname")[k].innerText = dt["name"]
     } 
-}
     document.getElementsByClassName("cname")[k].innerText =  dt["cname"]
     document.getElementsByClassName("syr")[k].innerText =  dt["year"]
     document.getElementsByClassName("vbtn")[k].abc =  dt["url"]
     document.getElementsByClassName("vbtn")[k].onclick =  function(){window.open(this.abc,'targetWindow','toolbar=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=900')}
     document.getElementsByClassName("tname")[k].innerText = dt["tname"]
     document.getElementsByClassName("fee")[k].innerText = dt["fee"] + " LKR"
-    document.getElementsByClassName("allbtn")[k].id = dt["uid"] + "``"+dt["cid"] + "``"+dt["uid"] + "``"+dt["mid"] 
+    document.getElementsByClassName("allbtn")[k].id = dt["uid"] + "``"+dt["cid"]+ "``"+dt["mid"] + "``"+dt["sid"] + "``"+dt["fee"] + "``"+dt["tname"] + "``"+dt["url"]+ "``"+dt["cname"]  + "``"+dt["year"]+ "``"+dt["name"] 
+    document.getElementsByClassName("chathu")[k].id = dt["uid"] + "``"+dt["cid"]+ "``"+dt["mid"] + "``"+dt["sid"] + "``"+dt["fee"] + "``"+dt["tname"] + "``"+dt["url"]+ "``"+dt["cname"]  + "``"+dt["year"]+ "``"+dt["name"] 
     if(dt["url"]!=null){
     if(dt["url"]!=null){
         if(dt["url"].includes(".pdf")){
@@ -147,5 +240,10 @@ document.getElementsByClassName("allpic")[k].style.display="block"
       document.getElementsByClassName("allpic")[k].src = dt["url"]}
     }else{
       document.getElementsByClassName("allpic")[k].src = "assets/img/clz.jpg"
-    }}}}}
+    }
+
+}
+}}
+ 
+}}}
 }}

@@ -339,58 +339,66 @@ Swal.fire({
           <!-- / Navbar -->
       
           <!-- Content wrapper -->
-          <div class="content-wrapper">
+          <div class="content-wrapper" id="contentm">
+         
             <div class="container-xxl flex-grow-1 container-p-y" id="cont" >
-              <div class="row row-cols-1 row-cols-md-4 g-4" id="all-classes-card" >
-                <div class="col clzcard"  id="clzcard"  style="display: none;" >
-                  <div class="card" style="border: 1px solid #696cfe80;">
-                   
-                    <a >
-                      <img  src="assets/img/clz.jpg" class="card-img-top allpic" alt="Class Icon"/>
-              
-                      <div id="pdf-main-container" class="pdfcont" style="display:block ;">
-                        <div class="pdf-loader" id="pdf-loader"></div>
-                        <div class="pdf-contents" id="pdf-contents">
-                            <div id="pdf-meta">
-                               
-                                <div class="page-count-containe" id="page-count-container"></div>
-                            </div>
-                        <img src="" ><canvas class="pdf-canvas" id="pdf-canvas" style="width:100% ;"></canvas></img>    
-                        </div>
-                    </div>
+              <div class="card">   
+                <div class="card-body">
+                  <h5 class="card-title text-primary fw-bold">Pending Slips</h5>
+                  <div id="avai" class="badge bg-label-warning rounded-pill">No Slips available</div> <br><br>
+            <center> <img id="loading" src="https://cdn.dribbble.com/users/722246/screenshots/16072725/media/5941bfc1daa4f1ea98ed052269e10b90.gif"style="height:500px ;" alt="">
+            </center>
+            <div class="row row-cols-1 row-cols-md-4 g-4" id="all-classes-card" >
+              <div class="col clzcard"  id="clzcard"  style="display: none;" >
+                <div class="card" style="border: 1px solid #696cfe80;">
+                 
+                  <a >
+                    <img  src="assets/img/clz.jpg" class="card-img-top allpic" alt="Class Icon"/>
+            
+                    <div id="pdf-main-container" class="pdfcont" style="display:block ;">
+                      <div class="pdf-loader" id="pdf-loader"></div>
+                      <div class="pdf-contents" id="pdf-contents">
+                          <div id="pdf-meta">
+                             
+                              <div class="page-count-containe" id="page-count-container"></div>
+                          </div>
+                      <img src="" ><canvas class="pdf-canvas" id="pdf-canvas" style="width:100% ;"></canvas></img>    
+                      </div>
+                  </div>
+                  </a>
+                  <div class="card-body">
+                    <a href="#">
+                      <h5  class="card-title fw-bold sname" style="font-size: 20px; color: #111;">Loading slip Name</h5>
                     </a>
-                    <div class="card-body">
-                      <a href="#">
-                        <h5  class="card-title fw-bold sname" style="font-size: 20px; color: #111;">Loading slip Name</h5>
-                      </a>
-      
-                      <center style="display: none;" class="mb-1 islive">
-                        <span id="live-streaming" class="badge bg-label-primary rounded-pill align-middle"><i class="bx bx-broadcast bx-flashing"></i> <span class="align-middle bx-flashing">Live on Aduruthuma</span></span>
-                      </center>
-                      <p>
-                        <span class="fw-bold"><i class='bx bx-calendar'></i></span> <span class="align-middle cname">Loading</span>
-                        <br>
-                        <span class="fw-bold"><i class='bx bx-time-five'></i></span> <span class="align-middle syr">Loading</span>
-                        <br>
-                        <span class="fw-bold"><i class='bx bx-user-circle'></i></span> <span class="align-middle tname">Loading</span>
-                        <br>
-                        <span class="fw-bold"><i class='bx bx-info-circle'></i></span> <span class="align-middle fee">Loading</span>
-                        <br>
-                      </p>
-                      <center>
-                        <a href="javascript:void(0)" class="btn btn-outline-primary fw-bold allbtn" onclick="launch(this.id)" id="allbtn"><i class='bx bxs-check-circle'></i></a>
-                        <a href="javascript:void(0)" class="btn btn-outline-primary fw-bold vbtn" id="vbtn"><i class='bx bx-window-open'></i></a>
-                        <a href="javascript:void(0)" class="btn btn-outline-primary fw-bold chathu" onclick="launch(this.id)" id="chathu"><i class='bx bx-x-circle' ></i></a>
+    
+                    <center style="display: none;" class="mb-1 islive">
+                      <span id="live-streaming" class="badge bg-label-primary rounded-pill align-middle"><i class="bx bx-broadcast bx-flashing"></i> <span class="align-middle bx-flashing">Live on Aduruthuma</span></span>
+                    </center>
+                    <p>
+                      <span class="fw-bold"><i class='bx bx-calendar'></i></span> <span class="align-middle cname">Loading</span>
+                      <br>
+                      <span class="fw-bold"><i class='bx bx-time-five'></i></span> <span class="align-middle syr">Loading</span>
+                      <br>
+                      <span class="fw-bold"><i class='bx bx-user-circle'></i></span> <span class="align-middle tname">Loading</span>
+                      <br>
+                      <span class="fw-bold"><i class='bx bx-info-circle'></i></span> <span class="align-middle fee">Loading</span>
+                      <br>
+                    </p>
+                    <center>
+                      <a href="javascript:void(0)" class="btn btn-outline-primary fw-bold allbtn" onclick="launch(this.id)" id="allbtn"><i class='bx bxs-check-circle'></i></a>
+                      <a href="javascript:void(0)" class="btn btn-outline-primary fw-bold vbtn" id="vbtn"><i class='bx bx-window-open'></i></a>
+                      <a href="javascript:void(0)" class="btn btn-outline-primary fw-bold chathu" onclick="reject(this.id)" id="chathu"><i class='bx bx-x-circle' ></i></a>
 
 
-                      </center>
-                    </div>
+                    </center>
                   </div>
                 </div>
-     
- 
-                
               </div>
+   
+
+              
+            </div>
+           </div>   </div>
           </div>
           </div>
 
@@ -418,7 +426,34 @@ Swal.fire({
 
     <!-- Vendors JS -->
     <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script>
+  function mainload(){
+  var xhr2 = new XMLHttpRequest();
+url = "https://aduruthuma-dev-8sr3.onrender.com/slips";
+xhr2.open("POST", url, true);
+xhr2.setRequestHeader("Content-Type", "application/json");
+xhr2.onreadystatechange = function () {
+if (xhr2.readyState === 4 && xhr2.status === 200) {
+if(xhr2.responseText=='null'){
+  Swal.fire(
+  'Perfect!',
+  'You have reviewed all the pending slips',
+  'info'
+).then((res)=>{
+  location.reload()
+})
+} else {
+  document.getElementById('loading').style.display='none'
+  onloadz(JSON.parse(xhr2.responseText))
+}
+}}
+var  data = JSON.stringify({email:logs.email,pass:atob(getCookie("openjs"))})
+encrypted = CryptoJS.AES.encrypt(data, 'fuck').toString()
+var pushload = JSON.stringify({auth:encrypted})
+xhr2.send(pushload)
+}
 
+</script>
     <!-- Main JS -->
     <script src="../assets/js/main.js"></script>
     <!-- Page JS -->
@@ -454,23 +489,14 @@ Swal.fire({
 if (user) {
 // User is signed in, see docs for a list of available properties
 // https://firebase.google.com/docs/reference/js/firebase.User
-var xhr2 = new XMLHttpRequest();
-url = "http://localhost:5000/slips";
-xhr2.open("POST", url, true);
-xhr2.setRequestHeader("Content-Type", "application/json");
-xhr2.onreadystatechange = function () {
-if (xhr2.readyState === 4 && xhr2.status === 200) {
-onloadz(JSON.parse(xhr2.responseText))
-}}
-var  data = JSON.stringify({email:user.email,pass:atob(getCookie("openjs"))})
-encrypted = CryptoJS.AES.encrypt(data, 'fuck').toString()
-var pushload = JSON.stringify({auth:encrypted})
-xhr2.send(pushload)
+
+
 
 
 
 uid = user.uid;
 logs = user
+mainload()
 document.getElementById("dp1").src = user.photoURL
 document.getElementById("dp2").src = user.photoURL
 document.getElementById("name2").innerText = user.displayName
