@@ -2,11 +2,7 @@
 
 var $$ = function( id ) { return document.getElementById( id ); };
 firebase.auth().onAuthStateChanged((user) => {
-  if(localStorage.getItem("pw")==null){
-    localStorage.clear()
-    firebase.auth().signOut()
-  
-  }
+
 
 
   if (user) {
