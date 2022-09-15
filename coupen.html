@@ -13,9 +13,15 @@ data-template="vertical-menu-template-free">
     <title>Dashboard | Aduruthuma LMS</title>
 
     <meta name="description" content="" />
+<script>
+var $$ = function( id ) { return document.getElementById( id ); };
 
+</script>
     <!-- Favicon -->
+
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/icon.png" />
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.8/firebase-app.min.js"></script>
@@ -121,7 +127,7 @@ data-template="vertical-menu-template-free">
 					<div class="menu-inner-shadow"></div>
 					<ul class="menu-inner py-1">
 						<!-- Dashboard -->
-						<li class="menu-item active">
+						<li class="menu-item ">
 							<a href="/" class="menu-link">
 								<i class="menu-icon tf-icons bx bx-home-circle"></i>
 								<div data-i18n="Analytics">Dashboard</div>
@@ -136,7 +142,7 @@ data-template="vertical-menu-template-free">
 							</a>
 						</li>
             <!-- Exams -->
-						<li class="menu-item">
+						<li class="menu-item active">
 							<a href="coupen" class="menu-link">
                 <i class='menu-icon tf-icon bx bxs-coupon'></i>
 								<div data-i18n="Analytics">Coupens</div>
@@ -320,35 +326,76 @@ Swal.fire({
                         }
         
                               </script>
+                              <script>
+                                firebase.auth().onAuthStateChanged((user) => {
+                              if (user) {
+                              // User is signed in, see docs for a list of available properties
+                              // https://firebase.google.com/docs/reference/js/firebase.User
+                              
+                              
+                              
+                              
+                              
+                              uid = user.uid;
+                              logs = user
+                              document.getElementById("dp1").src = user.photoURL
+                              document.getElementById("dp2").src = user.photoURL
+                              document.getElementById("name2").innerText = user.displayName
+                       
+
+  var xhr2 = new XMLHttpRequest();
+url = "https://aduruthuma-dev-8sr3.onrender.com/byname";
+//url = "http://localhost:5000/byname";
+xhr2.open("POST", url, true);
+xhr2.setRequestHeader("Content-Type", "application/json");
+xhr2.onreadystatechange = function () {
+if (xhr2.readyState === 4 && xhr2.status === 200) {
+if(xhr2.responseText=='null'){
+  $('#loading').fadeOut()
+  $('#contzz').fadeIn()
+  Swal.fire({
+    toast:true,
+  title:'No Classes found!',
+  text:'Immediately Contact US Please',
+  icon:'error',
+  confirmButtonText:"Retry"
+  }).then((res)=>{
+  location.reload()
+})
+} else {
+  $('#contzz').fadeIn()
+  $('#loading').fadeOut()
+
+  nn=JSON.parse(xhr2.responseText)
+for (var i = 0; i< Object.keys(nn).length; i++){
+  var tid = Object.keys(nn)[i]
+  var tnmm = nn[Object.keys(nn)[i]]["info"]["topic"] + " | "+ nn[Object.keys(nn)[i]]["info"]["year"]+ " | "+ nn[Object.keys(nn)[i]]["info"]["name"]+ " | "+ nn[Object.keys(nn)[i]]["info"]["section"] + " | " +nn[Object.keys(nn)[i]]["info"]["time"]  
+  var opt = document.createElement('option');
+                             opt.value = tid ;
+                             opt.innerHTML =  tnmm;
+                             $$('class-select').appendChild(opt);
+}
+}
+}}
+var  data = JSON.stringify({email:logs.email,pass:atob(getCookie("openjs"))})
+encrypted = CryptoJS.AES.encrypt(data, 'fuck').toString()
+var pushload = JSON.stringify({auth:encrypted})
+xhr2.send(pushload)
+
+
+
+                              
+                              // ...
+                              } else {
+                              location.replace("login")
+                              // User is signed out
+                              // ...
+                              }
+                              });
+                              </script>
                       <a id="lgu" onclick="logout()" class="dropdown-item" >
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
-                        <script>
-                          firebase.auth().onAuthStateChanged((user) => {
-                        if (user) {
-                        // User is signed in, see docs for a list of available properties
-                        // https://firebase.google.com/docs/reference/js/firebase.User
-                        
-                        
-                        
-                        
-                        
-                        uid = user.uid;
-                        logs = user
-                        
-                        document.getElementById("dp1").src = user.photoURL
-                        document.getElementById("dp2").src = user.photoURL
-                        document.getElementById("name2").innerText = user.displayName
-                        
-                        
-                        // ...
-                        } else {
-                        location.replace("login")
-                        // User is signed out
-                        // ...
-                        }
-                        });
-                        </script>
                       </a>
                     </li>
                   </ul>
@@ -362,7 +409,122 @@ Swal.fire({
 
           <!-- Content wrapper -->
           <div class="content-wrapper">
+<div class="container-xxl flex-grow-1 container-p-y">
+  
+<div class="card">
 
+  <div class="card h-100" id="contzz" style="display:none ;">
+    <div class="card-header d-flex align-items-center justify-content-between">
+      <h5 class="card-title m-0 me-2 fw-bold text-uppercase text-primary"><span style="font-size:30px ;"><i class=" tf-icon bx bx-dollar text-warning"></i></span> New Coupen </h5>
+      <div class="dropdown">
+        <button class="btn p-0" type="button" id="paymentDataList" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="bx bx-dots-vertical-rounded"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="paymentDataList">
+          <a class="dropdown-item bg-label-danger" onclick="cleara()" href="javascript:void(0);">Delete all Coupens
+          </a>
+       
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <small class="text-muted">Price</small>
+      <div class="d-flex align-items-center mb-3">
+        <h5 class="text-primary me-3 mb-0">Rs <span class="fw-bolder" id="amt"> 00.00</span></h5><button id="setval" onclick="getval()" type="button" class="btn btn-sm rounded active btn-icon btn-dark">
+          <span class="tf-icons bx bx-pencil"></span>
+        </button>
+      </div>
+      <script>
+        function getval(){
+Swal.fire({
+  title: 'Enter the Amount in LKR',
+  input: 'number',
+  inputLabel: 'Gift Coupen Amount',
+  inputPlaceholder: 'Enter a correct amount',
+  toast:true,
+  showCloseButton:true
+}).then((amt)=>{
+  if (amt&&amt.value!=null) {
+  document.getElementById("amt").innerText = parseInt((amt.value)).toFixed(2)
+  price = parseInt(amt.value)
+}
+})
+
+
+        }
+      </script>
+      <form id="paymentMethodForm" class="row g-3" onsubmit="return false">
+        <div class="col-12">
+          <small class="text-muted d-block mb-2">Add Checkout Permissions:</small>
+      <div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="ewallet">
+          <label class="form-check-label badge bg-label-primary" for="flexCheckDefault">
+            Enable Wallet Transfer
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" onchange="indis()" id="eclass">
+          <label class="form-check-label badge bg-label-primary" for="flexCheckDefault">
+            Valid for any class
+          </label>
+          <script>
+            function indis(){
+              if($$('eclass').checked){
+$('#pasel').fadeOut()
+              } else{
+                $('#pasel').fadeIn()    
+              }
+            }
+          </script>
+        </div>
+      </div>
+        </div>
+        <div class="col-12" id="pasel">
+          <label class="form-label w-100" for="paymentAddCard">Choose the Class</label>
+          <div class="input-group input-group-merge">
+            <select class="form-select" id="class-select">
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="fromDate">From Date</label>
+          <input type="date" id="fromDate" class="form-control" placeholder="MM/YY">
+        </div>
+        <script>
+          $(document).ready( function() {
+
+            document.getElementById('fromDate').valueAsDate = new Date();
+})
+        </script>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="exDate">Exp. Date</label>
+          <input type="date" id="exDate" class="form-control" placeholder="MM/YY">
+        </div>
+        <script>
+     var myDate = new Date();
+xx = myDate.getMonth()+1
+result = new Date(myDate.setMonth(xx))
+
+console.log(result)
+   document.getElementById('exDate').valueAsDate =  result;
+    </script>
+        <div class="col-12">
+          <label class="form-label" for="paymentAddCardName">Gift Note</label>
+          <textarea name="" class="form-control" id="gitc" cols="30" rows="4" placeholder="Leave it a blank if u don't want"></textarea>
+        </div>
+   
+        <div class="col-12 text-center">
+          <button type="submit" onclick="veri()" class="btn btn-primary w-20 d-grid">Generate Coupen </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <center> <img id="loading" src="https://cdn.dribbble.com/users/722246/screenshots/16072725/media/5941bfc1daa4f1ea98ed052269e10b90.gif"style="height:500px ;" alt=""></center>
+
+</div>
+
+</div>
           </div>
 
           <!-- Content wrapper -->
@@ -378,7 +540,6 @@ Swal.fire({
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
@@ -393,6 +554,7 @@ Swal.fire({
     <script src="../assets/js/main.js"></script>
     <!-- Page JS -->
     <script src="../assets/js/dashboards-analytics.js"></script>
+    <script src="js/coupen.js"></script>
 
 
     <!-- Place this tag in your head or just before your close body tag. -->

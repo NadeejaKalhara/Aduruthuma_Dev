@@ -13,7 +13,10 @@ data-template="vertical-menu-template-free">
     <title>Slips | Aduruthuma LMS</title>
 
     <meta name="description" content="" />
+<script>
+var $$ = function( id ) { return document.getElementById( id ); };
 
+</script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/icon.png" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
@@ -140,10 +143,10 @@ data-template="vertical-menu-template-free">
 							</a>
 						</li>
             <!-- Exams -->
-						<li class="menu-item">
-							<a href="exams.html" class="menu-link">
-								<i class="menu-icon tf-icons bx bx-timer"></i>
-								<div data-i18n="Analytics">Exams</div>
+            <li class="menu-item">
+							<a href="coupen" class="menu-link">
+                <i class='menu-icon tf-icon bx bxs-coupon'></i>
+								<div data-i18n="Analytics">Coupens</div>
 							</a>
 						</li>
 						<!-- Reports -->
@@ -435,11 +438,14 @@ xhr2.setRequestHeader("Content-Type", "application/json");
 xhr2.onreadystatechange = function () {
 if (xhr2.readyState === 4 && xhr2.status === 200) {
 if(xhr2.responseText=='null'){
-  Swal.fire(
-  'Perfect!',
-  'You have reviewed all the pending slips',
-  'info'
-).then((res)=>{
+  $('#loading').fadeOut()
+  Swal.fire({
+    toast:true,
+  title:'Perfect! 🥳',
+  text:'You have reviewed all the pending slips',
+  icon:'success',
+  confirmButtonText:"Refresh"
+  }).then((res)=>{
   location.reload()
 })
 } else {
