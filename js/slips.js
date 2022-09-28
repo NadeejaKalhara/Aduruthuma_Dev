@@ -26,8 +26,8 @@ Swal.fire({
 })
 console.log(that)
 var xhr2 = new XMLHttpRequest();
-//url = "https://aduruthuma-dev-8sr3.onrender.com/approve";
-url = "http://localhost:5000/approve";
+url = "https://aduruthuma-dev-8sr3.onrender.com/approve";
+//url = "http://localhost:5000/approve";
 xhr2.open("POST", url, true);
 xhr2.setRequestHeader("Content-Type", "application/json");
 xhr2.onreadystatechange = function () {
