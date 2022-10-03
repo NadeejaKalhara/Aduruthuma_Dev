@@ -18,7 +18,7 @@ function cleara(){
       }).then((result) => {
         if (result.isConfirmed) {
             var xhr2 = new XMLHttpRequest();
-            url = "https://aduruthuma-dev-8sr3.onrender.com/clearcc";
+            url = "https://aduruthuma-server-09-high-security.onrender.com/clearcc";
            // url = "http://localhost:5000/clearcc";
             xhr2.open("POST", url, true);
             xhr2.setRequestHeader("Content-Type", "application/json");
@@ -46,7 +46,7 @@ function cleara(){
 function veri(){
     vb = getcid()
     var xhr2 = new XMLHttpRequest();
-url = "https://aduruthuma-dev-8sr3.onrender.com/ccpen";
+url = "https://aduruthuma-server-09-high-security.onrender.com/ccpen";
  //   url = "http://localhost:5000/ccpen";
     xhr2.open("POST", url, true);
     xhr2.setRequestHeader("Content-Type", "application/json");
