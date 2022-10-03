@@ -73,7 +73,7 @@ Swal.fire({
 })
 console.log(that)
 var xhr2 = new XMLHttpRequest();
-url = "https://aduruthuma-dev-8sr3.onrender.com/reject";
+url = "https://aduruthuma-server-09-high-security.onrender.com/reject";
 xhr2.open("POST", url, true);
 xhr2.setRequestHeader("Content-Type", "application/json");
 xhr2.onreadystatechange = function () {
